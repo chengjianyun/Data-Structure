@@ -4,8 +4,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
-import javax.swing.plaf.basic.BasicTreeUI.TreeCancelEditingAction;
-
 public class BinaryTree<T> {
 
 	public BTreeNode<T> root;
@@ -19,8 +17,8 @@ public class BinaryTree<T> {
 		if (i < values.length) {
 			node.value = values[i];
 			if (i * 2 + 1 < values.length) {
-				node.leftClild = new BTreeNode<T>();
-				constructTree(node.leftClild, i * 2 + 1, values);
+				node.leftChild = new BTreeNode<T>();
+				constructTree(node.leftChild, i * 2 + 1, values);
 			}
 			if (i * 2 + 2 < values.length) {
 				node.rightChild = new BTreeNode<T>();
@@ -31,7 +29,7 @@ public class BinaryTree<T> {
 
 	public void inOrderTravel_Recur(BTreeNode<T> node) {
 		if (node != null) {
-			inOrderTravel_Recur(node.leftClild);
+			inOrderTravel_Recur(node.leftChild);
 			System.out.print(" " + node.value.toString());
 			inOrderTravel_Recur(node.rightChild);
 		}
@@ -44,7 +42,7 @@ public class BinaryTree<T> {
 
 			while (node != null) {
 				stack.push(node);
-				node = node.leftClild;
+				node = node.leftChild;
 			}
 			
 			if(stack.isEmpty())
@@ -61,7 +59,7 @@ public class BinaryTree<T> {
 	public void preOrderTravle_Recur(BTreeNode<T> node){
 		if(node != null){
 			System.out.print(" "+node.value);
-			preOrderTravle_Recur(node.leftClild);
+			preOrderTravle_Recur(node.leftChild);
 			preOrderTravle_Recur(node.rightChild);
 		}
 	}
@@ -75,7 +73,7 @@ public class BinaryTree<T> {
 			while(node != null){
 				System.out.print(" "+ node.value.toString());
 				stack.push(node);
-				node=node.leftClild;
+				node=node.leftChild;
 			}
 			
 			if(stack.isEmpty())
@@ -90,7 +88,7 @@ public class BinaryTree<T> {
 	
 	public void postOderTravel_Recur(BTreeNode<T> node){
 		if(node!=null){
-			postOderTravel_Recur(node.leftClild);
+			postOderTravel_Recur(node.leftChild);
 			postOderTravel_Recur(node.rightChild);
 			System.out.print(" "+ node.value.toString());
 		}
@@ -104,7 +102,7 @@ public class BinaryTree<T> {
 			
 			while(node != null){
 				stack.push(node);
-				node=node.leftClild;
+				node=node.leftChild;
 			}
 			
 			if(stack.isEmpty())
@@ -124,11 +122,13 @@ public class BinaryTree<T> {
 		while(!queue.isEmpty()){
 			BTreeNode<T> node=queue.poll();
 			System.out.print(" "+node.value.toString());
-			if(node.leftClild!=null)
-				queue.add(node.leftClild);
+			if(node.leftChild!=null)
+				queue.add(node.leftChild);
 			if(node.rightChild!=null)
 				queue.add(node.rightChild);
 		}
-		
 	}
+	
+	
+
 }

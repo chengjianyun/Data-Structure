@@ -2,7 +2,7 @@ package personal.janyun.ds;
 
 public class BTreeNode<T> {
 	public T value;
-	public BTreeNode<T> leftClild;
+	public BTreeNode<T> leftChild;
 	public BTreeNode<T> rightChild;
 	
 	public BTreeNode() {
@@ -15,7 +15,7 @@ public class BTreeNode<T> {
 	
 	public boolean isLeftChild(BTreeNode<T> node) {
 		// TODO Auto-generated method stub
-		if(this.leftClild != null && this.leftClild==node)
+		if(this.leftChild != null && this.leftChild==node)
 			return true;
 		return false;
 	}
