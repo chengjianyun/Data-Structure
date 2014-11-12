@@ -12,4 +12,18 @@ public class BTreeNode<T> {
 		// TODO Auto-generated constructor stub
 		this.value=value;
 	}
+	
+	public boolean isLeftChild(BTreeNode<T> node) {
+		// TODO Auto-generated method stub
+		if(this.leftClild != null && this.leftClild==node)
+			return true;
+		return false;
+	}
+	
+	public boolean isRightChild(BTreeNode<T> node) {
+		// TODO Auto-generated method stub
+		if(this.rightChild != null && this.rightChild==node)
+			return true;
+		return false;
+	}
 }
