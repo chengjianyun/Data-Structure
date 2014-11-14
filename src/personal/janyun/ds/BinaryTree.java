@@ -129,6 +129,50 @@ public class BinaryTree<T> {
 		}
 	}
 	
+	public BTreeNode<T> convertToDList(BTreeNode<T> node, boolean isLeft) {
+		if(node == null){
+			return null;
+		}
+		
+		BTreeNode<T> left=convertToDList(node.leftChild, true);
+		node.leftChild=left;
+		if(left!=null)
+			left.rightChild=node;
+		
+		BTreeNode<T> right=convertToDList(node.rightChild, false);
+		node.rightChild=right;
+		if(right!=null)
+			right.leftChild=node;
+		
+		if(right!=null && isLeft)
+			return right;
+		else if(left!=null && !isLeft)
+			return left;
+		else
+			return node;
+	}
 	
-
+	public BTreeNode<T> convertToDList(BinaryTree<T> tree){
+		Stack<BTreeNode<T>> stack=new Stack<BTreeNode<T>>();
+		BTreeNode<T> node=tree.root;
+		BTreeNode<T> head=null;
+		while(true){
+			while(node!=null){
+				stack.add(node);
+				node=node.leftChild;
+			}
+			
+			if(stack.isEmpty())
+				break;
+			
+			node=stack.pop();			
+			node.leftChild=head;	
+			if(head!=null)
+				head.rightChild=node;
+			head=node;
+			
+			node=node.rightChild;
+		}
+		return head;
+	}
 }
