@@ -1,9 +1,14 @@
 package ds.java.test;
 
+import java.util.ArrayList;
+
 import personal.janyun.ds.BSTreeNode;
 import personal.janyun.ds.BTreeNode;
 import personal.janyun.ds.BinaryTree;
 import personal.janyun.ds.ListBSTree;
+import personal.janyun.ds.RBTree;
+import personal.janyun.ds.RBTreeNode;
+import personal.janyun.ds.RBTreeNode.Color;
 
 public class Test {
 	public static void main(String[] args) {
@@ -62,6 +67,22 @@ public class Test {
 		System.out.println("\nMAX in bsTree: " + bsTree.maximum(bsTree.root).value);
 		System.out.println("MIN in bsTree: " + bsTree.minimum(bsTree.root).value);
 		System.out.println("Search 7 in bsTree: " + bsTree.search(new Integer(7)).value);
+		
+		RBTree rbTree=new RBTree();
+		Integer[] ints=new Integer[]{41,38,31,12,19,8};
+		
+		for(Integer i : ints){
+			RBTreeNode<Integer> node=new RBTreeNode<Integer>();
+			node.key=i;
+			node.color=Color.red;
+			rbTree.insert(node);
+		}		
+		rbTree.getClass();
+		
+		while(rbTree.root!=rbTree.NIL){
+			RBTreeNode<Integer> min=rbTree.getMin(rbTree.root);
+			rbTree.delete(min);
+		}
 		
 	}
 }

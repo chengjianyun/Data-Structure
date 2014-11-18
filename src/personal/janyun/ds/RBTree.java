@@ -8,6 +8,11 @@ public class RBTree {
 	public RBTreeNode<Integer> root;
 	public static RBTreeNode<Integer> NIL = new RBTreeNode<Integer>(
 			Color.black, null);
+	
+	public RBTree() {
+		// TODO Auto-generated constructor stub
+		root=NIL;
+	}
 
 	public void left_rotate(RBTreeNode<Integer> node) {
 
@@ -42,7 +47,7 @@ public class RBTree {
 			left.parent = node.parent;
 
 			node.leftChild = left.rightChild;
-			if (left.rightChild != null)
+			if (left.rightChild != NIL)
 				left.rightChild.parent = node;
 
 			left.rightChild = node;
@@ -93,7 +98,7 @@ public class RBTree {
 				// 调整节点的叔节点是红色
 				if (p.parent.rightChild.color == Color.red) {
 					p.parent.color = Color.red;
-					p.parent.color = Color.black;
+					p.parent.rightChild.color = Color.black;
 					p.color = Color.black;
 					node = p.parent;
 					p = node.parent;
@@ -127,6 +132,7 @@ public class RBTree {
 				}
 			}
 		}
+		root.color=Color.black;
 	}
 
 	public void transplant(RBTreeNode<Integer> des, RBTreeNode<Integer> sour) {
@@ -149,6 +155,14 @@ public class RBTree {
 		}
 		return index;
 	}
+	
+	public RBTreeNode<Integer> getMax(RBTreeNode<Integer> node) {
+		// TODO Auto-generated method stub
+		RBTreeNode<Integer> index=node;
+		while(index!=NIL && index.rightChild!=NIL)
+			index=index.rightChild;
+		return index;
+	}
 
 	public void delete(RBTreeNode<Integer> node) {
 		RBTreeNode<Integer> moved_node = node;
@@ -156,10 +170,10 @@ public class RBTree {
 		RBTreeNode<Integer> ori_pos = NIL;
 
 		if (node.leftChild == NIL) {
-			ori_pos = node.leftChild;
+			ori_pos = node.rightChild;
 			transplant(node, node.rightChild);
 		} else if (node.rightChild == NIL) {
-			ori_pos = node.rightChild;
+			ori_pos = node.leftChild;
 			transplant(node, node.leftChild);
 		} else {
 			moved_node = getMin(node.rightChild);

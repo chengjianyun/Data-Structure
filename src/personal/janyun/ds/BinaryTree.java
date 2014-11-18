@@ -44,134 +44,149 @@ public class BinaryTree<T> {
 				stack.push(node);
 				node = node.leftChild;
 			}
-			
-			if(stack.isEmpty())
+
+			if (stack.isEmpty())
 				break;
-			
+
 			node = stack.pop();
 			System.out.print(" " + node.value.toString());
 			if (node != null)
-				node=node.rightChild;
+				node = node.rightChild;
 
 		}
 	}
-	
-	public void preOrderTravle_Recur(BTreeNode<T> node){
-		if(node != null){
-			System.out.print(" "+node.value);
+
+	public void preOrderTravle_Recur(BTreeNode<T> node) {
+		if (node != null) {
+			System.out.print(" " + node.value);
 			preOrderTravle_Recur(node.leftChild);
 			preOrderTravle_Recur(node.rightChild);
 		}
 	}
-	
-	public void preOrderTravel(){
+
+	public void preOrderTravel() {
 		Stack<BTreeNode<T>> stack = new Stack<BTreeNode<T>>();
 		BTreeNode<T> node = root;
-		
-		while(true){
-			
-			while(node != null){
-				System.out.print(" "+ node.value.toString());
+
+		while (true) {
+
+			while (node != null) {
+				System.out.print(" " + node.value.toString());
 				stack.push(node);
-				node=node.leftChild;
+				node = node.leftChild;
 			}
-			
-			if(stack.isEmpty())
+
+			if (stack.isEmpty())
 				break;
-			
-			node=stack.pop();
-			if(node!=null){
-				node=node.rightChild;
+
+			node = stack.pop();
+			if (node != null) {
+				node = node.rightChild;
 			}
 		}
 	}
-	
-	public void postOderTravel_Recur(BTreeNode<T> node){
-		if(node!=null){
+
+	public void postOderTravel_Recur(BTreeNode<T> node) {
+		if (node != null) {
 			postOderTravel_Recur(node.leftChild);
 			postOderTravel_Recur(node.rightChild);
-			System.out.print(" "+ node.value.toString());
+			System.out.print(" " + node.value.toString());
 		}
 	}
-	
+
 	public void postOrderTrvel() {
 		Stack<BTreeNode<T>> stack = new Stack<BTreeNode<T>>();
 		BTreeNode<T> node = root;
-		
-		while(true){
-			
-			while(node != null){
+
+		while (true) {
+
+			while (node != null) {
 				stack.push(node);
-				node=node.leftChild;
+				node = node.leftChild;
 			}
-			
-			if(stack.isEmpty())
+
+			if (stack.isEmpty())
 				break;
-			
-			node=stack.pop();
-			System.out.print(" "+ node.value.toString());
-			if(node!=null){
-				node=node.rightChild;
+
+			node = stack.pop();
+			System.out.print(" " + node.value.toString());
+			if (node != null) {
+				node = node.rightChild;
 			}
 		}
 	}
-	
-	public void levelTravel(){
-		Queue<BTreeNode<T>> queue=new LinkedList<BTreeNode<T>>();
+
+	public void levelTravel() {
+		Queue<BTreeNode<T>> queue = new LinkedList<BTreeNode<T>>();
 		queue.add(root);
-		while(!queue.isEmpty()){
-			BTreeNode<T> node=queue.poll();
-			System.out.print(" "+node.value.toString());
-			if(node.leftChild!=null)
+		while (!queue.isEmpty()) {
+			BTreeNode<T> node = queue.poll();
+			System.out.print(" " + node.value.toString());
+			if (node.leftChild != null)
 				queue.add(node.leftChild);
-			if(node.rightChild!=null)
+			if (node.rightChild != null)
 				queue.add(node.rightChild);
 		}
 	}
-	
+
+	/**
+	 * 按中序将二叉树转为双向链表，递归实现
+	 * 
+	 * @param node
+	 * @param isLeft
+	 *            表示是否当前节点是父节点向左节点遍历，向左返回后子树的最大节点（最右节点）作为前驱，
+	 *            向右返子树的最小节点（最左节点）作为后继
+	 * @return
+	 */
 	public BTreeNode<T> convertToDList(BTreeNode<T> node, boolean isLeft) {
-		if(node == null){
+		if (node == null) {
 			return null;
 		}
-		
-		BTreeNode<T> left=convertToDList(node.leftChild, true);
-		node.leftChild=left;
-		if(left!=null)
-			left.rightChild=node;
-		
-		BTreeNode<T> right=convertToDList(node.rightChild, false);
-		node.rightChild=right;
-		if(right!=null)
-			right.leftChild=node;
-		
-		if(right!=null && isLeft)
+
+		BTreeNode<T> left = convertToDList(node.leftChild, true);
+		node.leftChild = left;
+		if (left != null)
+			left.rightChild = node;
+
+		BTreeNode<T> right = convertToDList(node.rightChild, false);
+		node.rightChild = right;
+		if (right != null)
+			right.leftChild = node;
+
+		if (right != null && isLeft)
 			return right;
-		else if(left!=null && !isLeft)
+		else if (left != null && !isLeft)
 			return left;
 		else
 			return node;
 	}
-	
-	public BTreeNode<T> convertToDList(BinaryTree<T> tree){
-		Stack<BTreeNode<T>> stack=new Stack<BTreeNode<T>>();
-		BTreeNode<T> node=tree.root;
-		BTreeNode<T> head=null;
-		while(true){
-			while(node!=null){
+
+	/**
+	 * 按中序将二叉树转为双向列表，非递归实现 将节点按出站的顺序连接起来即可
+	 * 
+	 * @param tree
+	 * @return
+	 */
+	public BTreeNode<T> convertToDList(BinaryTree<T> tree) {
+		Stack<BTreeNode<T>> stack = new Stack<BTreeNode<T>>();
+		BTreeNode<T> node = tree.root;
+		BTreeNode<T> head = null;
+		while (true) {
+			while (node != null) {
 				stack.add(node);
-				node=node.leftChild;
+				node = node.leftChild;
 			}
-			
-			if(stack.isEmpty())
+
+			if (stack.isEmpty())
 				break;
-			
-			node=stack.pop();			
-			node.leftChild=head;	
-			if(head!=null)
-				head.rightChild=node;
-			head=node;
-			
-			node=node.rightChild;
+
+			node = stack.pop();
+			node.leftChild = head;
+			if (head != null)
+				head.rightChild = node;
+			head = node;
+
+			node = node.rightChild;
 		}
 		return head;
 	}
