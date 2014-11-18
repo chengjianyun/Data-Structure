@@ -1,7 +1,5 @@
 package personal.janyun.ds;
 
-import javax.swing.text.AbstractDocument.BranchElement;
-
 public class ListBSTree implements IBinarySearchTree<Integer> {
 	public BSTreeNode<Integer> root;
 
