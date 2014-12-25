@@ -1,5 +1,10 @@
 package personal.janyun.ds;
 
+/**
+ * 大根堆的数组实现
+ * @author jocheng
+ *
+ */
 public class ArrayHeap implements Heap<Integer> {
 	private Integer[] data;
 	private int size;
@@ -12,7 +17,7 @@ public class ArrayHeap implements Heap<Integer> {
 
 	public ArrayHeap(Integer[] data, int size) throws Exception {
 		// TODO Auto-generated constructor stub
-		if(data.length>size)
+		if (data.length > size)
 			throw new Exception("data capacity over flow the size");
 		this.data = data;
 		this.size = data.length;
@@ -37,6 +42,10 @@ public class ArrayHeap implements Heap<Integer> {
 	 */
 	public int right(int i) {
 		return 2 * i + 2;
+	}
+
+	public int parent(int i) {
+		return (i - 1) / 2;
 	}
 
 	/**
@@ -100,15 +109,28 @@ public class ArrayHeap implements Heap<Integer> {
 	}
 
 	/**
-	 * 向堆中插入元素
+	 * 向堆中插入元素,这个实现是错误的，因为子堆的属性已经被打破了
+	 */
+	// public void insert(Integer value) {
+	// // TODO Auto-generated method stub
+	// if (size < capacity && size > 0) {
+	// data[size] = data[0];
+	// size++;
+	// }
+	// data[0] = value;
+	// heapfiy(0);
+	// }
+
+	/**
+	 * 
 	 */
 	public void insert(Integer value) {
 		// TODO Auto-generated method stub
-		if (size < capacity && size > 0) {
-			data[size] = data[0];
+		if (size < capacity) {
+			data[size] = Integer.MIN_VALUE;
+			increase(size, value.intValue());
+			size++;
 		}
-		data[0] = value;
-		heapfiy(0);
 	}
 
 	/**
@@ -127,4 +149,54 @@ public class ArrayHeap implements Heap<Integer> {
 		return value;
 	}
 
+	public int getSize() {
+		// TODO Auto-generated method stub
+		return this.size;
+	}
+
+	public void sort() {
+		for (int i = size - 1; i > 1; i--) {
+			Integer tmp = data[0];
+			data[0] = data[i];
+			data[i] = tmp;
+			size--;
+			heapfiy(0);
+		}
+	}
+
+	public Integer extract_max() {
+		if (size > 1) {
+			Integer max = data[0];
+			data[0] = data[size - 1];
+			size--;
+			heapfiy(0);
+			return max;
+		} else
+			return null;
+	}
+
+	/**
+	 * 第index个元素值增加到key
+	 * @param index
+	 * @param key
+	 */
+	public void increase(int index, int key) {
+		if (index < 0 || index >= size || data[index].intValue() < key)
+			return;
+		data[index] = key;
+		if (index == 0)
+			return;
+		Integer increased = data[index];
+		int par = parent(index);
+		do {
+			if (data[par].intValue() > increased.intValue()) {
+				data[index] = data[par];
+				index = par;
+				par = parent(index);
+			} else {
+				break;
+			}
+		} while (par > 0);
+		data[index] = increased;
+	}
 }

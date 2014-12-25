@@ -1,6 +1,7 @@
 package personal.janyun.ds;
 
 public interface Heap<E> {
+	public int getSize();
 	public void heapfiy(int i);
 	public E pop();
 	public E peek();
